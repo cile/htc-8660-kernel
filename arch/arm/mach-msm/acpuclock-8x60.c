@@ -804,7 +804,11 @@ static unsigned int __init select_freq_plan(void)
 	l2_freq_tbl_size = ARRAY_SIZE(l2_freq_tbl_v2);
 
 	raw_speed_bin = readl(QFPROM_SPEED_BIN_ADDR);
+#ifdef CONFIG_MSM8X60_FORCE_15GHZ
+	speed_bin = 0x1;
+#else
 	speed_bin = raw_speed_bin & 0xF;
+#endif
 	if (speed_bin == 0xF)
 		speed_bin = (raw_speed_bin >> 4) & 0xF;
 	if (speed_bin == 0x1)
